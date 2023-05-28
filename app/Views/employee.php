@@ -2,6 +2,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 <style type="text/css">
     .row{
         margin-left:30px ;
@@ -18,7 +19,7 @@
             <div class="row">
                 <div class="col-md-12">
                 <h2 style="color: white">Add Employee Details</h2>
-                    <form method="POST">
+                    <form method="POST" id="addemployee">
                         <div class="card card-primary">
                             <div class="card-header">
                                 <strong><i class="fa fa-plus"></i> Add Employee</strong>
@@ -28,27 +29,29 @@
                             
                                 <div class="form-group">
                                 <label for="name">Name:</label>
-                                    <input type="text" name="name" pattern="[a-zA-Z]+" class="form-control">
+                                    <input type="text" name="name" pattern="[a-zA-Z]+" class="form-control" required>
+                                    <span class="error" id="nameError"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Mobile</strong></label>
-                                    <input type="text" name="mobile" pattern="[0-9]{10}" class="form-control">
+                                    <input type="text" name="mobile" pattern="[3456789][0-9]{9}" class="form-control" required>
+                                    <span class="error" id="mobileError"></span>
                                 </div>
                                 <div class="form-group">
                                     <lable><strong>Email</strong></lable>
-                                    <input type="email" name="email" class="form-control">
+                                    <input type="email" name="email" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Data of Birth</strong></label>
-                                    <input type="date" name="dob" class="form-control">
+                                    <input type="date" name="dob" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Password</strong></label>
-                                    <input type="password" name="password" class="form-control">
+                                    <input type="password" name="password" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Confirm Password</strong></label>
-                                    <input type="password" name="confirm_password" class="form-control">
+                                    <input type="password" name="confirm_password" class="form-control" required>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -62,3 +65,32 @@
     </div>
 
 </body>
+
+<script>
+    const form = document.getElementById('addemployee');
+    const nameInput = document.getElementById('name');
+    const mobileInput = document.getElementById('mobile');
+    const nameError = document.getElementById('nameError');
+    const mobileError = document.getElementById('mobileError');
+    
+
+    form.addEventListener('submit', function (event) {
+      let isValid = true;
+
+      // Validate name (allow alphanumeric only, no special characters)
+      const nameRegex = /^[a-zA-Z0-9]+$/;
+      if (!nameRegex.test(nameInput.value)) {
+        nameError.textContent = 'Name should contain alphanumeric characters only.';
+        isValid = false;
+      } else {
+        nameError.textContent = '';
+      }
+
+      // Validate mobile number (10 digits, not starting with 0, 1, 2, 3, 4, or 5)
+      const mobileRegex = /^[6789]\d{9}$/;
+      if (!mobileRegex.test(mobileInput.value)) {
+        mobileError.textContent = 'Mobile number should be a 10-digit number starting with 6, 7, 8, or 9
+
+
+
+</script>

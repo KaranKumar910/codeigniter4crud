@@ -11,7 +11,7 @@
 		color: white;
     }
 </style>
-//ghhjg
+
 <?php
      $db = \Config\Database::connect(); 
      $query = $db->table('employee')->where('id',$id)->get();
@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2 style="color: white">Update Employee details</h2>
-                    <form method="POST" action="<?= base_url('home/edit_employee/'.$employee->id) ?>">
+                    <form method="POST" action="<?= base_url('home/edit_employee/'.$employee->id) ?>" id="addemployee">
                         <div class="card card-primary">
                             <div class="card-header">
                                 <strong><i class="fa fa-plus"></i> Add Employee</strong>
@@ -35,19 +35,21 @@
                             
                                 <div class="form-group">
                                 <label for="name">Name:</label>
-                                    <input type="text" name="name" class="form-control" value="<?=$row->name?>">
+                                    <input type="text" name="name" class="form-control" pattern="[a-zA-Z]+" value="<?=$row->name?>" required>
+                                    <span class="error" id="nameError"></span>
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Mobile</strong></label>
-                                    <input type="text" name="mobile" class="form-control" value="<?=$row->mobile?>">
+                                    <input type="text" name="mobile" class="form-control" pattern="[3456789][0-9]{9}" value="<?=$row->mobile?>" required>
+                                    <span class="error" id="mobileError"></span>
                                 </div>
                                 <div class="form-group">
                                     <lable><strong>Email</strong></lable>
-                                    <input type="email" name="email" class="form-control" value="<?=$row->email?>">
+                                    <input type="email" name="email" class="form-control" value="<?=$row->email?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label><strong>Data of Birth</strong></label>
-                                    <input type="date" name="dob" class="form-control" value="<?=$row->dob?>">
+                                    <input type="date" name="dob" class="form-control" value="<?=$row->dob?>" required>
                                 </div>
                             
                             </div>
@@ -72,3 +74,31 @@
     ';
  }
 ?>
+<script>
+    const form = document.getElementById('addemployee');
+    const nameInput = document.getElementById('name');
+    const mobileInput = document.getElementById('mobile');
+    const nameError = document.getElementById('nameError');
+    const mobileError = document.getElementById('mobileError');
+    
+
+    form.addEventListener('submit', function (event) {
+      let isValid = true;
+
+      // Validate name (allow alphanumeric only, no special characters)
+      const nameRegex = /^[a-zA-Z0-9]+$/;
+      if (!nameRegex.test(nameInput.value)) {
+        nameError.textContent = 'Name should contain alphanumeric characters only.';
+        isValid = false;
+      } else {
+        nameError.textContent = '';
+      }
+
+      // Validate mobile number (10 digits, not starting with 0, 1, 2, 3, 4, or 5)
+      const mobileRegex = /^[6789]\d{9}$/;
+      if (!mobileRegex.test(mobileInput.value)) {
+        mobileError.textContent = 'Mobile number should be a 10-digit number starting with 6, 7, 8, or 9
+
+
+
+</script>
